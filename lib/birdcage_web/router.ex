@@ -28,7 +28,7 @@ defmodule BirdcageWeb.Router do
   scope "/api" do
     pipe_through :api
 
-    post("/rollout", BirdcageWeb.WebhookController, :rollout)
+    post("/confirm/rollout", BirdcageWeb.WebhookController, :confirm_rollout)
 
     get "/openapi", OpenApiSpex.Plug.RenderSpec, []
   end

@@ -53,7 +53,14 @@ defmodule Birdcage.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:credo, "~> 1.4", only: [:dev, :test], runtime: false},
       {:excoveralls, "~> 0.13", only: :test},
-      {:open_api_spex, "~> 3.7"}
+      {:open_api_spex, "~> 3.7"},
+      {:ecto, "~> 3.4"},
+      # {:nebulex, "~> 2.0"},
+      {:nebulex, github: "cabol/nebulex"},
+      # => For using :shards as backend
+      # {:shards, "~> 0.6"},
+      # => For using Caching Annotations
+      {:decorator, "~> 1.3"}
     ]
   end
 

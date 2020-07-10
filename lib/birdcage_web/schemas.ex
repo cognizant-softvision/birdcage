@@ -6,20 +6,6 @@ defmodule BirdcageWeb.Schemas do
   require OpenApiSpex
   alias OpenApiSpex.Schema
 
-  defmodule WebhookMetadata do
-    @moduledoc false
-
-    OpenApiSpex.schema(%{
-      title: "WebhookMetadata",
-      description: "Flagger webhook payload metadata",
-      type: :object,
-      properties: %{
-        test: %Schema{type: :string},
-        token: %Schema{type: :string}
-      }
-    })
-  end
-
   defmodule Webhook do
     @moduledoc false
 
@@ -30,18 +16,13 @@ defmodule BirdcageWeb.Schemas do
       properties: %{
         name: %Schema{type: :string, description: "Pod name"},
         namespace: %Schema{type: :string, description: "Pod namespace"},
-        phase: %Schema{type: :string, description: "Rollout phase"},
-        metadata: WebhookMetadata
+        phase: %Schema{type: :string, description: "Rollout phase"}
       },
       required: [:name, :namespace],
       example: %{
         "name" => "podinfo",
         "namespace" => "test",
-        "phase" => "Progressing",
-        "metadata" => %{
-          "test" => "all",
-          "token" => "16688eb5e9f289f1991c"
-        }
+        "phase" => "Progressing"
       }
     })
   end

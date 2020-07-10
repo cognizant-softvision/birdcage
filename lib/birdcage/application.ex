@@ -12,7 +12,8 @@ defmodule Birdcage.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Birdcage.PubSub},
       # Start the Endpoint (http/https)
-      BirdcageWeb.Endpoint
+      BirdcageWeb.Endpoint,
+      {Birdcage.Cache, []}
       # Start a worker by calling: Birdcage.Worker.start_link(arg)
       # {Birdcage.Worker, arg}
     ]
