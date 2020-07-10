@@ -1,3 +1,15 @@
+# [1.1.0](https://github.com/cognizant-softvision/birdcage/compare/v1.0.0...v1.1.0) (2020-07-10)
+
+
+### Chores
+
+* not using postgres ([9195be7](https://github.com/cognizant-softvision/birdcage/commit/9195be7046fd620781ec952944c01b7b5907230d))
+
+
+### Features
+
+* implement the confirm rollout webhook (#1) ([a9b0612](https://github.com/cognizant-softvision/birdcage/commit/a9b0612af841ed00ee8c8c84aaabfafc71d30394)), closes [#1](https://github.com/cognizant-softvision/birdcage/issues/1)
+
 # 1.0.0 (2020-07-10)
 
 
