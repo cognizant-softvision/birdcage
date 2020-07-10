@@ -10,18 +10,3 @@ services:
       - "4000:4000"
     volumes:
       - .:/app
-    depends_on:
-      - db
-
-  db:
-    image: postgres:11.6-alpine
-    environment:
-      PGDATA: /var/lib/postgresql/data/pgdata
-    ports:
-      - "5432:5432"
-    restart: always
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-
-volumes:
-  pgdata:
