@@ -5,6 +5,7 @@ defmodule Birdcage.MixProject do
     [
       app: :birdcage,
       version: "0.1.0",
+      description: "Birdcage",
       elixir: "~> 1.7",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
@@ -51,7 +52,8 @@ defmodule Birdcage.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:credo, "~> 1.4", only: [:dev, :test], runtime: false},
-      {:excoveralls, "~> 0.13", only: :test}
+      {:excoveralls, "~> 0.13", only: :test},
+      {:open_api_spex, "~> 3.7"}
     ]
   end
 

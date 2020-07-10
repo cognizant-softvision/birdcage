@@ -12,18 +12,26 @@ defmodule BirdcageWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+
+    plug OpenApiSpex.Plug.PutApiSpec, module: BirdcageWeb.ApiSpec
   end
 
-  scope "/", BirdcageWeb do
+  scope "/" do
     pipe_through :browser
 
-    live "/", PageLive, :index
+    live "/", BirdcageWeb.PageLive, :index
+
+    get "/swaggerui", OpenApiSpex.Plug.SwaggerUI, path: "/api/openapi"
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", BirdcageWeb do
-  #   pipe_through :api
-  # end
+  scope "/api" do
+    pipe_through :api
+
+    post("/rollout", BirdcageWeb.WebhookController, :rollout)
+
+    get "/openapi", OpenApiSpex.Plug.RenderSpec, []
+  end
 
   # Enables LiveDashboard only for development
   #

@@ -1,5 +1,6 @@
 defmodule BirdcageWeb.PageLive do
   @moduledoc false
+
   use BirdcageWeb, :live_view
 
   @impl true
