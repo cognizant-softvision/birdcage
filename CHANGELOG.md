@@ -1,3 +1,16 @@
+# [1.2.0](https://github.com/cognizant-softvision/birdcage/compare/v1.1.0...v1.2.0) (2020-07-14)
+
+
+### Chores
+
+* add badges to readme ([d01480b](https://github.com/cognizant-softvision/birdcage/commit/d01480bde993270247ed54f7ebdc2b1ee419a8f3))
+* update coverage badge ([6c14778](https://github.com/cognizant-softvision/birdcage/commit/6c14778ae38a5735941ef062fe3d01f7a87efb6d))
+
+
+### Features
+
+* added UI to support manual approval of rollouts and promotions (#2) ([1b32510](https://github.com/cognizant-softvision/birdcage/commit/1b32510adc7873a1769974fe425aa76738e2ae91)), closes [#2](https://github.com/cognizant-softvision/birdcage/issues/2)
+
 # [1.1.0](https://github.com/cognizant-softvision/birdcage/compare/v1.0.0...v1.1.0) (2020-07-10)
 
 
