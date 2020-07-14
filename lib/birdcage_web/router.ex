@@ -19,7 +19,7 @@ defmodule BirdcageWeb.Router do
   scope "/" do
     pipe_through :browser
 
-    live "/", BirdcageWeb.PageLive, :index
+    live "/", BirdcageWeb.DashboardLive, :index
 
     get "/swaggerui", OpenApiSpex.Plug.SwaggerUI, path: "/api/openapi"
   end
@@ -29,6 +29,7 @@ defmodule BirdcageWeb.Router do
     pipe_through :api
 
     post("/confirm/rollout", BirdcageWeb.WebhookController, :confirm_rollout)
+    post("/confirm/promotion", BirdcageWeb.WebhookController, :confirm_promotion)
 
     get "/openapi", OpenApiSpex.Plug.RenderSpec, []
   end
@@ -45,7 +46,7 @@ defmodule BirdcageWeb.Router do
 
     scope "/" do
       pipe_through :browser
-      live_dashboard "/dashboard", metrics: BirdcageWeb.Telemetry
+      live_dashboard "/observer", metrics: BirdcageWeb.Telemetry
     end
   end
 end

@@ -16,7 +16,19 @@ defmodule BirdcageWeb.Schemas do
       properties: %{
         name: %Schema{type: :string, description: "Pod name"},
         namespace: %Schema{type: :string, description: "Pod namespace"},
-        phase: %Schema{type: :string, description: "Rollout phase"}
+        phase: %Schema{
+          type: :string,
+          enum: [
+            "Initialized",
+            "Waiting",
+            "Progressing",
+            "Promoting",
+            "Finalising",
+            "Succeeded",
+            "Failed"
+          ],
+          description: "Rollout phase"
+        }
       },
       required: [:name, :namespace],
       example: %{
@@ -45,30 +57,6 @@ defmodule BirdcageWeb.Schemas do
         "source" => %{"pointer" => "/webhook/name"},
         "title" => "Invalid value"
       }
-    })
-  end
-
-  defmodule ErrorResponse do
-    @moduledoc false
-
-    OpenApiSpex.schema(%{
-      title: "ErrorResponse",
-      description: "Error responses from the API.",
-      type: :object,
-      oneOf: [
-        Error,
-        %Schema{
-          type: :object,
-          properties: %{
-            errors: %Schema{
-              type: :array,
-              items: SchemaError,
-              description: "List of schema errors."
-            }
-          },
-          required: [:errors]
-        }
-      ]
     })
   end
 end

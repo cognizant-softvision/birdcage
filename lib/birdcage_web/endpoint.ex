@@ -10,10 +10,6 @@ defmodule BirdcageWeb.Endpoint do
     signing_salt: "SjJBalc8"
   ]
 
-  socket "/socket", BirdcageWeb.UserSocket,
-    websocket: true,
-    longpoll: false
-
   socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
 
   # Serve at "/" the static files from "priv/static" directory.

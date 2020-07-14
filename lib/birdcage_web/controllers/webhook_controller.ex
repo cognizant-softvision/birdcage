@@ -29,4 +29,25 @@ defmodule BirdcageWeb.WebhookController do
       |> json(deployment)
     end
   end
+
+  @doc """
+  Confirm promotion webhook.
+
+  Hook is executed before scaling up the canary deployment and can be used for manual approval.
+  The promotion is paused until the hook returns a successful HTTP status code.
+  """
+  @doc request_body: {"Webhook payload", "application/json", Schemas.Webhook, required: true},
+       responses: [
+         ok: "Approved",
+         unprocessable_entity: {"Unprocessable", "application/json", Schemas.SchemaError},
+         forbidden: "Forbidden"
+       ]
+  def confirm_promotion(conn, _params, webhook_params) do
+    with {:ok, deployment} <- Birdcage.Deployment.fetch(webhook_params),
+         :ok <- Birdcage.Deployment.allow_promotion?(deployment) do
+      conn
+      |> put_status(:ok)
+      |> json(deployment)
+    end
+  end
 end

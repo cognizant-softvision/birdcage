@@ -1,4 +1,6 @@
 defmodule BirdcageWeb.ApiSpec do
+  @moduledoc false
+
   alias OpenApiSpex.{Info, OpenApi, Paths, Server}
   alias BirdcageWeb.{Endpoint, Router}
   @behaviour OpenApi
