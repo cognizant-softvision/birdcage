@@ -1,3 +1,17 @@
+## [1.2.1](https://github.com/cognizant-softvision/birdcage/compare/v1.2.0...v1.2.1) (2020-07-15)
+
+
+### Bug Fixes
+
+* disable SwaggerUI in prod ([94e78c3](https://github.com/cognizant-softvision/birdcage/commit/94e78c35fee32d171aff72f6642d53a817f66540))
+
+
+### Chores
+
+* add ci job to build and push docker image to registry ([3de7168](https://github.com/cognizant-softvision/birdcage/commit/3de7168f884cd940c1c01a707789e3ccb1afc49e))
+* configure Elixir Releases and build a release container ([6dee2fd](https://github.com/cognizant-softvision/birdcage/commit/6dee2fda385b0d9141fcdcf05762260d2eedce1f))
+* rename Dockerfile for dev use ([440a57b](https://github.com/cognizant-softvision/birdcage/commit/440a57b3756f655d5c4ffb986b35a276b2dcade7))
+
 # [1.2.0](https://github.com/cognizant-softvision/birdcage/compare/v1.1.0...v1.2.0) (2020-07-14)
 
 
