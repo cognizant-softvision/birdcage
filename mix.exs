@@ -17,7 +17,8 @@ defmodule Birdcage.MixProject do
       ],
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      releases: releases()
     ]
   end
 
@@ -73,6 +74,17 @@ defmodule Birdcage.MixProject do
   defp aliases do
     [
       setup: ["deps.get", "cmd npm install --prefix assets"]
+    ]
+  end
+
+  defp releases() do
+    [
+      birdcage: [
+        include_executables_for: [:unix],
+        include_erts: true,
+        strip_beams: false,
+        quiet: false
+      ]
     ]
   end
 end
