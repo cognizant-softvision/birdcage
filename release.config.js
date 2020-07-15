@@ -58,8 +58,9 @@ module.exports = {
     ['@semantic-release/release-notes-generator', releaseNotesGeneratorOptions],
     // updates the changelog file
     '@semantic-release/changelog',
-    '@semantic-release/git',
     // creating a git tag
+    '@semantic-release/git',
+    // publish a GitHub release
     '@semantic-release/github',
     // run events commands
     ['@semantic-release/exec', execCommands],
