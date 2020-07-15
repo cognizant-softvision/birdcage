@@ -21,7 +21,9 @@
               <div class="hidden md:block">
                 <div class="flex items-baseline ml-10">
                   <%= link "Home", to: Routes.dashboard_path(@conn, :index), class: "px-3 py-2 rounded-md text-sm font-medium text-white bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700" %>
-                  <%= link "Swagger UI", to: Routes.swagger_ui_path(@conn, [path: "/api/openapi"]), class: "ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700" %>
+                  <%= if function_exported?(Routes, :swagger_ui_path, 2) do %>
+                    <%= link "Swagger UI", to: Routes.swagger_ui_path(@conn, [path: "/api/openapi"]), class: "ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700" %>
+                  <% end %>
                   <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
                     <%= link "Observer", to: Routes.live_dashboard_path(@conn, :home), class: "ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700" %>
                   <% end %>
@@ -81,7 +83,9 @@
         <div x-show="isOpen" class="md:hidden">
           <div class="px-2 pt-2 pb-3 sm:px-3">
             <%= link "Home", to: Routes.dashboard_path(@conn, :index), class: "block px-3 py-2 rounded-md text-base font-medium text-white bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700" %>
-            <%= link "Swagger UI", to: Routes.swagger_ui_path(@conn, [path: "/api/openapi"]), class: "mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700" %>
+            <%= if function_exported?(Routes, :swagger_ui_path, 2) do %>
+              <%= link "Swagger UI", to: Routes.swagger_ui_path(@conn, [path: "/api/openapi"]), class: "mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700" %>
+            <% end %>
             <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
               <%= link "Observer", to: Routes.live_dashboard_path(@conn, :home), class: "mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700" %>
             <% end %>

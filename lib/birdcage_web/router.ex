@@ -21,7 +21,9 @@ defmodule BirdcageWeb.Router do
 
     live "/", BirdcageWeb.DashboardLive, :index
 
-    get "/swaggerui", OpenApiSpex.Plug.SwaggerUI, path: "/api/openapi"
+    if Mix.env() in [:dev, :test] do
+      get "/swaggerui", OpenApiSpex.Plug.SwaggerUI, path: "/api/openapi"
+    end
   end
 
   # Other scopes may use custom stacks.
