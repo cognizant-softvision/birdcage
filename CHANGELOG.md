@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/cognizant-softvision/birdcage/compare/v1.2.1...v1.2.2) (2020-07-16)
+
+
+### Bug Fixes
+
+* update ci job to build and push versioned docker image to registry ([faf0190](https://github.com/cognizant-softvision/birdcage/commit/faf0190fed27ccfaddbee6f7b64d6a2e12ed6a24))
+
 ## [1.2.1](https://github.com/cognizant-softvision/birdcage/compare/v1.2.0...v1.2.1) (2020-07-15)
 
 
