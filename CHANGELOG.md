@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/cognizant-softvision/birdcage/compare/v1.2.2...v1.3.0) (2020-07-19)
+
+
+### Features
+
+* add relative time the last rollout or promotion was attempted (#4) ([99e7268](https://github.com/cognizant-softvision/birdcage/commit/99e7268277b5b2b6c1be60ed60fe5d705d2c5f7b)), closes [#4](https://github.com/cognizant-softvision/birdcage/issues/4)
+
 ## [1.2.2](https://github.com/cognizant-softvision/birdcage/compare/v1.2.1...v1.2.2) (2020-07-16)
 
 
