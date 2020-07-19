@@ -27,6 +27,12 @@ defmodule BirdcageWeb.WebhookControllerTest do
     {:ok, conn: conn}
   end
 
+  setup do
+    # clear the cache before each test
+    Birdcage.Cache.stream()
+    |> Enum.each(&Birdcage.Cache.delete(&1))
+  end
+
   test "webhook example matches schema" do
     api_spec = ApiSpec.spec()
     schema = Schemas.Webhook.schema()
@@ -51,8 +57,9 @@ defmodule BirdcageWeb.WebhookControllerTest do
       conn = post(conn, Routes.webhook_path(conn, :confirm_rollout), @valid_params)
       assert body = json_response(conn, 200)
 
-      # cleanup
-      Deployment.delete(deployment)
+      latest_deployment = Birdcage.Deployment.get!(deployment.key)
+
+      assert nil != latest_deployment.confirm_rollout_at
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
@@ -83,8 +90,9 @@ defmodule BirdcageWeb.WebhookControllerTest do
       conn = post(conn, Routes.webhook_path(conn, :confirm_promotion), @valid_params)
       assert body = json_response(conn, 200)
 
-      # cleanup
-      Deployment.delete(deployment)
+      latest_deployment = Birdcage.Deployment.get!(deployment.key)
+
+      assert nil != latest_deployment.confirm_promotion_at
     end
 
     test "renders errors when data is invalid", %{conn: conn} do

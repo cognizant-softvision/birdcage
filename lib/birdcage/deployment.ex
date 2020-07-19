@@ -21,6 +21,8 @@ defmodule Birdcage.Deployment do
     field(:phase, :string)
     field(:allow_rollout, :boolean, default: false)
     field(:allow_promotion, :boolean, default: false)
+    field(:confirm_rollout_at, :utc_datetime)
+    field(:confirm_promotion_at, :utc_datetime)
   end
 
   @doc false
@@ -34,7 +36,16 @@ defmodule Birdcage.Deployment do
 
   def changeset(schema, params) do
     schema
-    |> cast(params, [:key, :name, :namespace, :phase, :allow_rollout, :allow_promotion])
+    |> cast(params, [
+      :key,
+      :name,
+      :namespace,
+      :phase,
+      :allow_rollout,
+      :allow_promotion,
+      :confirm_rollout_at,
+      :confirm_promotion_at
+    ])
     |> validate_required([:key, :name, :namespace, :phase, :allow_rollout, :allow_promotion])
     |> validate_inclusion(
       :phase,
@@ -84,6 +95,20 @@ defmodule Birdcage.Deployment do
   @doc false
   defdelegate get(key, opts \\ []), to: Cache
   defdelegate get!(key, opts \\ []), to: Cache
+
+  @doc """
+  Update the last confirm rollout timestamp
+  """
+  def touch_confirm_rollout(%__MODULE__{} = data) do
+    set(%__MODULE__{data | confirm_rollout_at: DateTime.utc_now()})
+  end
+
+  @doc """
+  Update the last confirm promotion timestamp
+  """
+  def touch_confirm_promotion(%__MODULE__{} = data) do
+    set(%__MODULE__{data | confirm_promotion_at: DateTime.utc_now()})
+  end
 
   def allow_rollout?(%__MODULE__{allow_rollout: true}), do: :ok
   def allow_rollout?(%__MODULE__{allow_rollout: false}), do: {:error, :forbidden}

@@ -23,10 +23,11 @@ defmodule BirdcageWeb.WebhookController do
        ]
   def confirm_rollout(conn, _params, webhook_params) do
     with {:ok, deployment} <- Birdcage.Deployment.fetch(webhook_params),
+         _ <- Birdcage.Deployment.touch_confirm_rollout(deployment),
          :ok <- Birdcage.Deployment.allow_rollout?(deployment) do
       conn
       |> put_status(:ok)
-      |> json(deployment)
+      |> render(:"200")
     end
   end
 
@@ -44,10 +45,11 @@ defmodule BirdcageWeb.WebhookController do
        ]
   def confirm_promotion(conn, _params, webhook_params) do
     with {:ok, deployment} <- Birdcage.Deployment.fetch(webhook_params),
+         _ <- Birdcage.Deployment.touch_confirm_promotion(deployment),
          :ok <- Birdcage.Deployment.allow_promotion?(deployment) do
       conn
       |> put_status(:ok)
-      |> json(deployment)
+      |> render(:"200")
     end
   end
 end

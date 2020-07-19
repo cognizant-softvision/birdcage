@@ -101,6 +101,7 @@ jobs:
     name: Publish Image
     runs-on: ubuntu-latest
     needs: build
+    if: ${{ github.event_name == 'branch' && github.ref == 'refs/heads/main' }}
 
     steps:
       - uses: actions/checkout@v2
@@ -111,6 +112,7 @@ jobs:
           name: next-release-version
 
       - name: Skip if not releasing
+        if: ${{ success() || failure() }}
         run: test -f version
 
       - name: Build image

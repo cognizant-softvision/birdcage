@@ -6,7 +6,8 @@ defmodule Birdcage.DeploymentTest do
     @valid_params %{
       "name" => "podinfo",
       "namespace" => "test",
-      "phase" => "Progressing"
+      "phase" => "Progressing",
+      "confirm_rollout_at" => ~U[2018-11-15 10:00:00Z]
     }
 
     @invalid_params %{
@@ -19,6 +20,8 @@ defmodule Birdcage.DeploymentTest do
       {:ok, deployment} = Birdcage.Deployment.new(@valid_params)
 
       assert deployment.key == "podinfo.test"
+      assert deployment.confirm_rollout_at == ~U[2018-11-15 10:00:00Z]
+      assert deployment.confirm_promotion_at == nil
     end
 
     test "new with invalid params is invalid" do

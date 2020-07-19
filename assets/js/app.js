@@ -18,10 +18,20 @@ import { Socket } from 'phoenix';
 import NProgress from 'nprogress';
 import { LiveSocket } from 'phoenix_live_view';
 
+import * as dayjs from 'dayjs';
+import * as relativeTime from 'dayjs/plugin/relativeTime';
+
 let csrfToken = document
   .querySelector("meta[name='csrf-token']")
   .getAttribute('content');
 let liveSocket = new LiveSocket('/live', Socket, {
+  dom: {
+    onBeforeElUpdated(from, to) {
+      if (from.__x) {
+        window.Alpine.clone(from.__x, to);
+      }
+    },
+  },
   params: { _csrf_token: csrfToken },
 });
 
@@ -36,3 +46,8 @@ liveSocket.connect();
 // >> liveSocket.enableDebug()
 // >> liveSocket.enableLatencySim(1000)
 window.liveSocket = liveSocket;
+
+// extend dayjs with relative time support
+dayjs.extend(relativeTime);
+// expose dayjs on window for alpinejs
+window.dayjs = dayjs;

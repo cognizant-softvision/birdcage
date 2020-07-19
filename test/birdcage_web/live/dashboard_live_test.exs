@@ -9,6 +9,12 @@ defmodule BirdcageWeb.DashboardLiveTest do
     "phase" => "Progressing"
   }
 
+  setup do
+    # clear the cache before each test
+    Birdcage.Cache.stream()
+    |> Enum.each(&Birdcage.Cache.delete(&1))
+  end
+
   test "disconnected and connected render", %{conn: conn} do
     {:ok, index_live, disconnected_html} = live(conn, "/")
     assert disconnected_html =~ "Deployments"
@@ -32,9 +38,6 @@ defmodule BirdcageWeb.DashboardLiveTest do
     assert :ok =
              Birdcage.Deployment.get!(deployment.key)
              |> Birdcage.Deployment.allow_rollout?()
-
-    # cleanup
-    Birdcage.Deployment.delete(deployment)
   end
 
   test "updates toggle state when promotion clicked", %{conn: conn} do
@@ -54,8 +57,5 @@ defmodule BirdcageWeb.DashboardLiveTest do
     assert :ok =
              Birdcage.Deployment.get!(deployment.key)
              |> Birdcage.Deployment.allow_promotion?()
-
-    # cleanup
-    Birdcage.Deployment.delete(deployment)
   end
 end
