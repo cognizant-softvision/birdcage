@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/cognizant-softvision/birdcage/compare/v1.4.0...v1.4.1) (2020-07-22)
+
+
+### Bug Fixes
+
+* update logo and remove unused menus ([44e1f77](https://github.com/cognizant-softvision/birdcage/commit/44e1f775c60f89e51874ad5f07bb31985608f0fd))
+
 # [1.4.0](https://github.com/cognizant-softvision/birdcage/compare/v1.3.0...v1.4.0) (2020-07-22)
 
 
