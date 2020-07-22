@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/cognizant-softvision/birdcage/compare/v1.3.0...v1.4.0) (2020-07-22)
+
+
+### Features
+
+* major refactor to use Ecto.Repo with a custom Adapter for the Nebulex.Cache (#5) ([9dc3775](https://github.com/cognizant-softvision/birdcage/commit/9dc3775df888d331736ab10f8f7ea17462470ac1)), closes [#5](https://github.com/cognizant-softvision/birdcage/issues/5)
+
 # [1.3.0](https://github.com/cognizant-softvision/birdcage/compare/v1.2.2...v1.3.0) (2020-07-19)
 
 
