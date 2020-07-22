@@ -1,13 +1,12 @@
 {
-    "name": "Docker Phoenix",
-    "dockerComposeFile": "docker-compose.yml",
-    "service": "app",
-    "workspaceFolder": "/app",
-    "appPort": 4000,
-    "shutdownAction": "stopCompose",
-    "extensions": [
-        "mjmcloug.vscode-elixir",
-        "jakebecker.elixir-ls",
-        "florinpatrascu.vscode-elixir-snippets",
-    ]
+  "name": "Docker Phoenix",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/app",
+  "appPort": 4000,
+  "shutdownAction": "stopCompose",
+  "extensions": [
+    "jakebecker.elixir-ls",
+    "florinpatrascu.vscode-elixir-snippets"
+  ]
 }

@@ -7,13 +7,14 @@ defmodule Birdcage.Application do
 
   def start(_type, _args) do
     children = [
+      # Start the repository
+      Birdcage.Repo,
       # Start the Telemetry supervisor
       BirdcageWeb.Telemetry,
       # Start the PubSub system
       {Phoenix.PubSub, name: Birdcage.PubSub},
       # Start the Endpoint (http/https)
-      BirdcageWeb.Endpoint,
-      {Birdcage.Cache, []}
+      BirdcageWeb.Endpoint
       # Start a worker by calling: Birdcage.Worker.start_link(arg)
       # {Birdcage.Worker, arg}
     ]

@@ -3,6 +3,8 @@ defmodule BirdcageWeb.DashboardLiveTest do
 
   import Phoenix.LiveViewTest
 
+  alias Birdcage.Dashboard
+
   @valid_params %{
     "name" => "podinfo",
     "namespace" => "test",
@@ -23,8 +25,8 @@ defmodule BirdcageWeb.DashboardLiveTest do
 
   test "updates toggle state when rollout clicked", %{conn: conn} do
     # setup
-    {:ok, deployment} = Birdcage.Deployment.fetch(@valid_params)
-    assert {:error, :forbidden} = Birdcage.Deployment.allow_rollout?(deployment)
+    {:ok, deployment} = Dashboard.fetch_deployment(@valid_params)
+    assert {:error, :forbidden} = Dashboard.allow_rollout?(deployment)
 
     # test
     {:ok, index_live, html} = live(conn, Routes.dashboard_path(conn, :index))
@@ -36,14 +38,14 @@ defmodule BirdcageWeb.DashboardLiveTest do
            |> render_click() =~ "border-green-400"
 
     assert :ok =
-             Birdcage.Deployment.get!(deployment.key)
-             |> Birdcage.Deployment.allow_rollout?()
+             Dashboard.get_deployment!(deployment.id)
+             |> Dashboard.allow_rollout?()
   end
 
   test "updates toggle state when promotion clicked", %{conn: conn} do
     # setup
-    {:ok, deployment} = Birdcage.Deployment.fetch(@valid_params)
-    assert {:error, :forbidden} = Birdcage.Deployment.allow_promotion?(deployment)
+    {:ok, deployment} = Dashboard.fetch_deployment(@valid_params)
+    assert {:error, :forbidden} = Dashboard.allow_promotion?(deployment)
 
     # test
     {:ok, index_live, html} = live(conn, Routes.dashboard_path(conn, :index))
@@ -55,7 +57,7 @@ defmodule BirdcageWeb.DashboardLiveTest do
            |> render_click() =~ "border-green-400"
 
     assert :ok =
-             Birdcage.Deployment.get!(deployment.key)
-             |> Birdcage.Deployment.allow_promotion?()
+             Dashboard.get_deployment!(deployment.id)
+             |> Dashboard.allow_promotion?()
   end
 end

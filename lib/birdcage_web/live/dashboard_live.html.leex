@@ -10,7 +10,7 @@
     <div class="mt-10">
       <ul class="md:grid md:grid-cols-3 md:col-gap-8 md:row-gap-10">
         <%= for deployment <- @deployments do %>
-          <%= live_component @socket, DeploymentComponent, id: deployment.key, deployment: deployment %>
+          <%= live_component @socket, DeploymentComponent, id: deployment.id, deployment: deployment %>
         <% end %>
       </ul>
     </div>

@@ -3,7 +3,7 @@ defmodule BirdcageWeb.WebhookControllerTest do
   use BirdcageWeb.ConnCase
   import OpenApiSpex.TestAssertions
 
-  alias Birdcage.{Dashboard, Deployment}
+  alias Birdcage.{Dashboard, Dashboard}
   alias BirdcageWeb.{ApiSpec, Schemas}
 
   @valid_params %{
@@ -47,17 +47,17 @@ defmodule BirdcageWeb.WebhookControllerTest do
 
     test "renders success when rollout is allowed", %{conn: conn} do
       # setup
-      {:ok, deployment} = Deployment.fetch(@valid_params)
-      assert {:error, :forbidden} = Deployment.allow_rollout?(deployment)
+      {:ok, deployment} = Dashboard.fetch_deployment(@valid_params)
+      assert {:error, :forbidden} = Dashboard.allow_rollout?(deployment)
 
-      deployment = Dashboard.toggle_rollout(deployment.key)
-      assert :ok = Deployment.allow_rollout?(deployment)
+      {:ok, deployment} = Dashboard.toggle_rollout(deployment.id)
+      assert :ok = Dashboard.allow_rollout?(deployment)
 
       # test
       conn = post(conn, Routes.webhook_path(conn, :confirm_rollout), @valid_params)
       assert body = json_response(conn, 200)
 
-      latest_deployment = Birdcage.Deployment.get!(deployment.key)
+      latest_deployment = Dashboard.get_deployment!(deployment.id)
 
       assert nil != latest_deployment.confirm_rollout_at
     end
@@ -80,17 +80,17 @@ defmodule BirdcageWeb.WebhookControllerTest do
 
     test "renders success when promotion is allowed", %{conn: conn} do
       # setup
-      {:ok, deployment} = Deployment.fetch(@valid_params)
-      assert {:error, :forbidden} = Deployment.allow_promotion?(deployment)
+      {:ok, deployment} = Dashboard.fetch_deployment(@valid_params)
+      assert {:error, :forbidden} = Dashboard.allow_promotion?(deployment)
 
-      deployment = Dashboard.toggle_promotion(deployment.key)
-      assert :ok = Deployment.allow_promotion?(deployment)
+      {:ok, deployment} = Dashboard.toggle_promotion(deployment.id)
+      assert :ok = Dashboard.allow_promotion?(deployment)
 
       # test
       conn = post(conn, Routes.webhook_path(conn, :confirm_promotion), @valid_params)
       assert body = json_response(conn, 200)
 
-      latest_deployment = Birdcage.Deployment.get!(deployment.key)
+      latest_deployment = Dashboard.get_deployment!(deployment.id)
 
       assert nil != latest_deployment.confirm_promotion_at
     end

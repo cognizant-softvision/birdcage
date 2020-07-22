@@ -5,6 +5,7 @@ defmodule BirdcageWeb.WebhookController do
   use OpenApiSpex.Controller
   use BirdcageWeb.ApiSpec
 
+  alias Birdcage.Dashboard
   alias BirdcageWeb.Schemas
 
   action_fallback BirdcageWeb.FallbackController
@@ -22,9 +23,9 @@ defmodule BirdcageWeb.WebhookController do
          forbidden: "Forbidden"
        ]
   def confirm_rollout(conn, _params, webhook_params) do
-    with {:ok, deployment} <- Birdcage.Deployment.fetch(webhook_params),
-         _ <- Birdcage.Deployment.touch_confirm_rollout(deployment),
-         :ok <- Birdcage.Deployment.allow_rollout?(deployment) do
+    with {:ok, deployment} <- Dashboard.fetch_deployment(webhook_params),
+         _ <- Dashboard.touch_confirm_rollout(deployment),
+         :ok <- Dashboard.allow_rollout?(deployment) do
       conn
       |> put_status(:ok)
       |> render(:"200")
@@ -44,9 +45,9 @@ defmodule BirdcageWeb.WebhookController do
          forbidden: "Forbidden"
        ]
   def confirm_promotion(conn, _params, webhook_params) do
-    with {:ok, deployment} <- Birdcage.Deployment.fetch(webhook_params),
-         _ <- Birdcage.Deployment.touch_confirm_promotion(deployment),
-         :ok <- Birdcage.Deployment.allow_promotion?(deployment) do
+    with {:ok, deployment} <- Dashboard.fetch_deployment(webhook_params),
+         _ <- Dashboard.touch_confirm_promotion(deployment),
+         :ok <- Dashboard.allow_promotion?(deployment) do
       conn
       |> put_status(:ok)
       |> render(:"200")
