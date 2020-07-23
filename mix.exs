@@ -4,7 +4,7 @@ defmodule Birdcage.MixProject do
   def project do
     [
       app: :birdcage,
-      version: "0.1.0",
+      version: "1.4.3",
       description: "Birdcage",
       elixir: "~> 1.7",
       elixirc_paths: elixirc_paths(Mix.env()),
