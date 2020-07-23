@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/cognizant-softvision/birdcage/compare/v1.4.1...v1.4.2) (2020-07-23)
+
+
+### Bug Fixes
+
+* **actions:** use next version output to control publishing image ([6b3bc43](https://github.com/cognizant-softvision/birdcage/commit/6b3bc434894cc5665867f8e3a55d41ce64a365b5))
+
 ## [1.4.1](https://github.com/cognizant-softvision/birdcage/compare/v1.4.0...v1.4.1) (2020-07-22)
 
 
