@@ -16,6 +16,8 @@ jobs:
   build:
     name: Build & Test
     runs-on: ubuntu-latest
+    outputs:
+      nextversion: ${{ steps.getnextversion.outputs.nextversion }}
 
     steps:
       - uses: actions/checkout@v2
@@ -89,11 +91,18 @@ jobs:
             @semantic-release/changelog
             @semantic-release/github
             @semantic-release/git
-      - name: Upload next release version
-        uses: actions/upload-artifact@v2
-        with:
-          name: next-release-version
-          path: version
+
+      - name: Output next release version
+        id: getnextversion
+        run: |
+          if [ -f "version" ]; then
+            VERSION=`cat version`
+            echo "::set-output name=nextversion::$VERSION"
+          else
+            VERSION=''
+            echo "Next release version not set. No release."
+          fi
+          echo "::set-output name=nextversion::$VERSION"
 
   # Push image to GitHub Packages.
   # See also https://docs.docker.com/docker-hub/builds/
@@ -101,19 +110,10 @@ jobs:
     name: Publish Image
     runs-on: ubuntu-latest
     needs: build
-    if: ${{ github.event_name == 'branch' && github.ref == 'refs/heads/main' }}
+    if: ${{ github.ref == 'refs/heads/main' && needs.build.outputs.nextversion != '' }}
 
     steps:
       - uses: actions/checkout@v2
-
-      - name: Download next release version
-        uses: actions/download-artifact@v2
-        with:
-          name: next-release-version
-
-      - name: Skip if not releasing
-        if: ${{ success() || failure() }}
-        run: test -f version
 
       - name: Build image
         run: docker build . --file Dockerfile --tag $IMAGE_NAME
@@ -126,9 +126,9 @@ jobs:
           IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
           # Change all uppercase to lowercase
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+          # Get version from output
+          VERSION=${{needs.build.outputs.nextversion}}
 
-          # Get version from artifact
-          VERSION=`cat version`
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
 
