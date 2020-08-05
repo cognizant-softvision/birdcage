@@ -9,6 +9,8 @@
 This is a simple tool providing an API and UI for the manual approval of a canary deployments via
 [Flagger](https://flagger.app/).
 
+![screenshot](https://github.com/cognizant-softvision/birdcage/raw/main/biredcage-screenshot.png)
+
 ## Deployment
 
 ## Configuring Flagger Webhooks
