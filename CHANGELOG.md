@@ -1,3 +1,15 @@
+# [1.5.0](https://github.com/cognizant-softvision/birdcage/compare/v1.4.2...v1.5.0) (2020-08-06)
+
+
+### Chores
+
+* add screenshot to readme ([ddcc285](https://github.com/cognizant-softvision/birdcage/commit/ddcc285f222466b1046c1b83a44df1cbe11a46b5))
+
+
+### Features
+
+* add simple health check ([89e1da1](https://github.com/cognizant-softvision/birdcage/commit/89e1da13d7db7d63d3eb7fb0dd7547b9a4079f61))
+
 ## [1.4.2](https://github.com/cognizant-softvision/birdcage/compare/v1.4.1...v1.4.2) (2020-07-23)
 
 
