@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/cognizant-softvision/birdcage/compare/v1.5.0...v1.6.0) (2020-08-07)
+
+
+### Features
+
+* add optional slack bot (#7) ([f7656b9](https://github.com/cognizant-softvision/birdcage/commit/f7656b9615fac5cb540dd27668017bd1ac7b137b)), closes [#7](https://github.com/cognizant-softvision/birdcage/issues/7)
+
 # [1.5.0](https://github.com/cognizant-softvision/birdcage/compare/v1.4.2...v1.5.0) (2020-08-06)
 
 
