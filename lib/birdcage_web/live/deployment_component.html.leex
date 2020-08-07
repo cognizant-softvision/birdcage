@@ -1,7 +1,7 @@
 <li id="<%= @id %>">
   <div class="max-w-sm overflow-hidden rounded shadow-lg">
     <div class="px-6 py-4">
-      <div class="mb-4 text-xl font-bold"><%= @deployment.name %></div>
+      <div class="mb-4 text-xl font-bold"><%= @deployment.id %></div>
       <div class="flex justify-center">
         <div class="w-full ml-4">
           <div class="flex flex-col mb-4">
@@ -11,7 +11,7 @@
                 <div class="relative w-12 h-6 transition duration-200 ease-linear rounded-full <%= toggle_class_bg(@deployment.allow_rollout) %>">
                   <label for="allow_rollout" phx-click="toggle_rollout" phx-value-id="<%= @id %>"
                         class="absolute left-0 w-6 h-6 mb-2 transition duration-100 ease-linear transform bg-white border-2 rounded-full cursor-pointer <%= toggle_class_border(@deployment.allow_rollout) %>"></label>
-                  <input type="checkbox"  name="allow_rollout"
+                  <input type="checkbox" name="allow_rollout"
                         class="w-full h-full appearance-none active:outline-none focus:outline-none"/>
                 </div>
               </div>

@@ -14,9 +14,8 @@ defmodule Birdcage.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Birdcage.PubSub},
       # Start the Endpoint (http/https)
-      BirdcageWeb.Endpoint
-      # Start a worker by calling: Birdcage.Worker.start_link(arg)
-      # {Birdcage.Worker, arg}
+      BirdcageWeb.Endpoint,
+      BirdcageBot.Supervisor
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

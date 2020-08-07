@@ -28,7 +28,7 @@ defmodule Birdcage.MixProject do
   def application do
     [
       mod: {Birdcage.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :os_mon]
     ]
   end
 
@@ -62,7 +62,9 @@ defmodule Birdcage.MixProject do
       # {:shards, "~> 0.6"},
       # => For using Caching Annotations
       {:decorator, "~> 1.3"},
-      {:plug_health, "~> 0.1.0"}
+      {:plug_health, "~> 0.1.0"},
+      {:fawkes, github: "forest/fawkes", ref: "4be10ac"},
+      {:vapor, "~> 0.9"}
     ]
   end
 
