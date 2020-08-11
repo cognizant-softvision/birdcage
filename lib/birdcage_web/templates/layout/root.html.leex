@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <%= csrf_meta_tag() %>
-    <%= live_title_tag assigns[:page_title] || "Birdcage", suffix: " · Phoenix Framework" %>
+    <%= live_title_tag assigns[:page_title] || "Birdcage" %>
     <link phx-track-static rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
     <script defer phx-track-static type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </head>
@@ -30,6 +30,21 @@
                 </div>
               </div>
             </div>
+            <%= if Birdcage.Application.authentication_enabled? do %>
+              <div class="hidden md:block">
+                <div class="flex items-center ml-4 md:ml-6">
+                  <div class="relative ml-3">
+                    <div>
+                      <%= if Plug.Conn.get_session(@conn, :user_name) do %>
+                        <%= link Plug.Conn.get_session(@conn, :user_name), to: Routes.session_path(@conn, :authenticate), class: "ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700" %>
+                      <% else %>
+                        <%= link "Sign in", to: Routes.session_path(@conn, :authenticate), class: "ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700" %>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% end %>
             <div class="flex -mr-2 md:hidden">
               <!-- Mobile menu button -->
               <button @click="isOpen = !isOpen" class="inline-flex items-center justify-center p-2 text-gray-400 rounded-md hover:text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 focus:text-white">
@@ -61,6 +76,19 @@
               <%= link "Observer", to: Routes.live_dashboard_path(@conn, :home), class: "mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700" %>
             <% end %>
           </div>
+          <%= if Birdcage.Application.authentication_enabled? do %>
+          <div class="pt-4 pb-3 border-t border-gray-700">
+            <div class="flex items-center px-5">
+              <div class="ml-3">
+                <%= if Plug.Conn.get_session(@conn, :user_name) do %>
+                  <%= link Plug.Conn.get_session(@conn, :user_name), to: Routes.session_path(@conn, :authenticate), class: "mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700" %>
+                <% else %>
+                  <%= link "Sign in", to: Routes.session_path(@conn, :authenticate), class: "mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700" %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+          <% end %>
         </div>
       </nav>
       <%= @inner_content %>

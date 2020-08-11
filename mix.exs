@@ -64,7 +64,8 @@ defmodule Birdcage.MixProject do
       {:decorator, "~> 1.3"},
       {:plug_health, "~> 0.1.0"},
       {:fawkes, github: "forest/fawkes", ref: "4be10ac"},
-      {:vapor, "~> 0.9"}
+      {:vapor, "~> 0.9"},
+      {:openid_connect, "~> 0.2.2"}
     ]
   end
 

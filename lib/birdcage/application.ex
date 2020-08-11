@@ -15,6 +15,7 @@ defmodule Birdcage.Application do
       {Phoenix.PubSub, name: Birdcage.PubSub},
       # Start the Endpoint (http/https)
       BirdcageWeb.Endpoint,
+      Birdcage.OIDCSupervisor,
       BirdcageBot.Supervisor
     ]
 
@@ -30,4 +31,10 @@ defmodule Birdcage.Application do
     BirdcageWeb.Endpoint.config_change(changed, removed)
     :ok
   end
+
+  def config do
+    Vapor.load!(Birdcage.Config)
+  end
+
+  def authentication_enabled?, do: get_in(config(), [:openid_connect, :enabled])
 end

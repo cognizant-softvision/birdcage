@@ -10,6 +10,10 @@ defmodule BirdcageWeb.Router do
     plug :put_secure_browser_headers
   end
 
+  pipeline :authenticated do
+    plug(BirdcageWeb.Plugs.Authenticated)
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
 
@@ -19,11 +23,15 @@ defmodule BirdcageWeb.Router do
   scope "/" do
     pipe_through :browser
 
-    live "/", BirdcageWeb.DashboardLive, :index
+    get "/session/authenticate", BirdcageWeb.SessionController, :authenticate
+    get "/session/callback", BirdcageWeb.SessionController, :callback
+  end
 
-    if Mix.env() in [:dev, :test] do
-      get "/swaggerui", OpenApiSpex.Plug.SwaggerUI, path: "/api/openapi"
-    end
+  scope "/" do
+    pipe_through :browser
+    pipe_through :authenticated
+
+    live "/", BirdcageWeb.DashboardLive, :index
   end
 
   # Other scopes may use custom stacks.
@@ -48,6 +56,9 @@ defmodule BirdcageWeb.Router do
 
     scope "/" do
       pipe_through :browser
+
+      get "/swaggerui", OpenApiSpex.Plug.SwaggerUI, path: "/api/openapi"
+
       live_dashboard "/observer", metrics: BirdcageWeb.Telemetry
     end
   end

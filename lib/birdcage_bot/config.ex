@@ -11,6 +11,6 @@ defmodule BirdcageBot.Config do
            {:slack_token, "BOT_SLACK_TOKEN", required: false},
            {:name, "BOT_NAME", default: "birdcage"},
            {:alias, "BOT_ALIAS", default: "birdcage"},
-           {:app_url, "BOT_APP_URL", required: false}
+           {:app_url, "APP_URL", required: false}
          ])
 end

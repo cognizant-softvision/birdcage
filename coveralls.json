@@ -1,0 +1,12 @@
+{
+  "skip_files": [
+    "lib/birdcage_bot/config.ex",
+    "lib/birdcage_bot/supervisor.ex",
+    "lib/birdcage_web/api_spec.ex",
+    "lib/birdcage_web/controllers/fallback_controller.ex",
+    "lib/birdcage_web/router.ex",
+    "lib/birdcage_web/views/changeset_view.ex",
+    "lib/birdcage_web/views/error_helpers.ex",
+    "lib/birdcage/application.ex"
+  ]
+}

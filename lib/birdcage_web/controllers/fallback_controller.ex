@@ -26,4 +26,18 @@ defmodule BirdcageWeb.FallbackController do
     |> put_view(BirdcageWeb.ErrorView)
     |> render(:"403")
   end
+
+  def call(conn, {:error, :unauthorized}) do
+    conn
+    |> put_status(:unauthorized)
+    |> put_view(BirdcageWeb.ErrorView)
+    |> render(:"401")
+  end
+
+  def call(conn, _) do
+    conn
+    |> put_status(:unauthorized)
+    |> put_view(BirdcageWeb.ErrorView)
+    |> render(:"401")
+  end
 end
