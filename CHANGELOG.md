@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/cognizant-softvision/birdcage/compare/v1.6.0...v1.7.0) (2020-08-11)
+
+
+### Features
+
+* add support for OpenID Connect authentication (#8) ([350d82f](https://github.com/cognizant-softvision/birdcage/commit/350d82f12be48596572df3a59490d00172478519)), closes [#8](https://github.com/cognizant-softvision/birdcage/issues/8)
+
 # [1.6.0](https://github.com/cognizant-softvision/birdcage/compare/v1.5.0...v1.6.0) (2020-08-07)
 
 
