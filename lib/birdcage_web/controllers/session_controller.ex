@@ -3,9 +3,6 @@ defmodule BirdcageWeb.SessionController do
 
   action_fallback BirdcageWeb.FallbackController
 
-  @client_id get_in(Birdcage.Application.config(), [:openid_connect, :client_id])
-  @client_role get_in(Birdcage.Application.config(), [:openid_connect, :client_role])
-
   def authenticate(conn, _params) do
     conn
     |> redirect(external: OpenIDConnect.authorization_uri(:birdcage))
@@ -30,15 +27,14 @@ defmodule BirdcageWeb.SessionController do
     |> redirect(to: "/")
   end
 
-  defp verify_access(%{
-         "resource_access" => %{
-           @client_id => %{
-             "roles" => [@client_role]
-           }
-         }
-       }) do
-    {:ok, :authorized}
+  defp verify_access(access_token) do
+    if client_role() in get_in(access_token, ["resource_access", client_id(), "roles"]) do
+      {:ok, :authorized}
+    else
+      {:error, :unauthorized}
+    end
   end
 
-  defp verify_access(_access_token), do: {:error, :unauthorized}
+  defp client_id, do: get_in(Birdcage.Application.config(), [:openid_connect, :client_id])
+  defp client_role, do: get_in(Birdcage.Application.config(), [:openid_connect, :client_role])
 end
