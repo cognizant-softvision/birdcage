@@ -1,3 +1,10 @@
+## [1.7.2](https://github.com/cognizant-softvision/birdcage/compare/v1.7.1...v1.7.2) (2020-08-12)
+
+
+### Bug Fixes
+
+* cleaned up authentication and added required login plug ([74ffcd6](https://github.com/cognizant-softvision/birdcage/commit/74ffcd61937588d38e0fb542294ef0e59e583a92))
+
 ## [1.7.1](https://github.com/cognizant-softvision/birdcage/compare/v1.7.0...v1.7.1) (2020-08-12)
 
 
