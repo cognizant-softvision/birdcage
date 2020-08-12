@@ -7,7 +7,7 @@ defmodule Birdcage.Config do
 
   config :app,
          env([
-           {:url, "APP_URL"}
+           {:url, "APP_URL", required: false}
          ])
 
   config :openid_connect,
