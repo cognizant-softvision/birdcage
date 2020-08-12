@@ -10,10 +10,6 @@ defmodule BirdcageWeb.Router do
     plug :put_secure_browser_headers
   end
 
-  pipeline :authenticated do
-    plug(BirdcageWeb.Plugs.Authenticated)
-  end
-
   pipeline :api do
     plug :accepts, ["json"]
 
@@ -28,8 +24,9 @@ defmodule BirdcageWeb.Router do
   end
 
   scope "/" do
-    pipe_through :browser
-    pipe_through :authenticated
+    pipe_through [:browser, BirdcageWeb.Plugs.RequireLogin]
+
+    get "/session/logout", BirdcageWeb.SessionController, :logout
 
     live "/", BirdcageWeb.DashboardLive, :index
   end

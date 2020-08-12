@@ -36,7 +36,7 @@
                   <div class="relative ml-3">
                     <div>
                       <%= if Plug.Conn.get_session(@conn, :user_name) do %>
-                        <%= link Plug.Conn.get_session(@conn, :user_name), to: Routes.session_path(@conn, :authenticate), class: "ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700" %>
+                        <%= link Plug.Conn.get_session(@conn, :user_name), to: Routes.session_path(@conn, :logout), class: "ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700" %>
                       <% else %>
                         <%= link "Sign in", to: Routes.session_path(@conn, :authenticate), class: "ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700" %>
                       <% end %>
@@ -81,7 +81,7 @@
             <div class="flex items-center px-5">
               <div class="ml-3">
                 <%= if Plug.Conn.get_session(@conn, :user_name) do %>
-                  <%= link Plug.Conn.get_session(@conn, :user_name), to: Routes.session_path(@conn, :authenticate), class: "mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700" %>
+                  <%= link Plug.Conn.get_session(@conn, :user_name), to: Routes.session_path(@conn, :logout), class: "mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700" %>
                 <% else %>
                   <%= link "Sign in", to: Routes.session_path(@conn, :authenticate), class: "mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700" %>
                 <% end %>

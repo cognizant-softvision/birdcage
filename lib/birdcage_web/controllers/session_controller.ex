@@ -24,6 +24,12 @@ defmodule BirdcageWeb.SessionController do
     end
   end
 
+  def logout(conn, _params) do
+    conn
+    |> clear_session
+    |> redirect(to: "/")
+  end
+
   defp verify_access(%{
          "resource_access" => %{
            @client_id => %{

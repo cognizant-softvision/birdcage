@@ -11,15 +11,6 @@ defmodule BirdcageWeb.DashboardLiveTest do
     "phase" => "Progressing"
   }
 
-  setup %{conn: conn} do
-    # fake authentication
-    conn =
-      conn
-      |> Plug.Test.init_test_session(user_name: "tester")
-
-    {:ok, conn: conn}
-  end
-
   setup do
     # clear the cache before each test
     Birdcage.Cache.stream()

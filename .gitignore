@@ -43,4 +43,4 @@ node_modules/
 .DS_Store
 
 # dotenv
-.env.local
+.env.*.local
