@@ -1,3 +1,10 @@
+## [1.7.3](https://github.com/cognizant-softvision/birdcage/compare/v1.7.2...v1.7.3) (2020-08-12)
+
+
+### Bug Fixes
+
+* compile time vs runtime issues with env vars ([a17474a](https://github.com/cognizant-softvision/birdcage/commit/a17474af164c42618db308e7c093e48cf5cd914b))
+
 ## [1.7.2](https://github.com/cognizant-softvision/birdcage/compare/v1.7.1...v1.7.2) (2020-08-12)
 
 
