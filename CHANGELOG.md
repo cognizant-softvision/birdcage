@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/cognizant-softvision/birdcage/compare/v1.7.0...v1.7.1) (2020-08-12)
+
+
+### Bug Fixes
+
+* don't require APP_URL env var ([30f4f83](https://github.com/cognizant-softvision/birdcage/commit/30f4f8323c7814577143328b4e430c7157a9f020))
+
 # [1.7.0](https://github.com/cognizant-softvision/birdcage/compare/v1.6.0...v1.7.0) (2020-08-11)
 
 
