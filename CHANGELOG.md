@@ -1,3 +1,10 @@
+## [1.8.1](https://github.com/cognizant-softvision/birdcage/compare/v1.8.0...v1.8.1) (2020-08-13)
+
+
+### Bug Fixes
+
+* refactor the flagger slack message handler ([dd6b797](https://github.com/cognizant-softvision/birdcage/commit/dd6b797b7503107e21de555fb42a75224854d3e9))
+
 # [1.8.0](https://github.com/cognizant-softvision/birdcage/compare/v1.7.3...v1.8.0) (2020-08-13)
 
 
