@@ -39,6 +39,44 @@ defmodule BirdcageWeb.Schemas do
     })
   end
 
+  defmodule Event do
+    @moduledoc false
+
+    OpenApiSpex.schema(%{
+      title: "Event",
+      description: "Flagger event payload",
+      type: :object,
+      allOf: [
+        Webhook,
+        %Schema{
+          type: :object,
+          properties: %{
+            metadata: %Schema{
+              type: :object,
+              properties: %{
+                eventMessage: %Schema{type: :string, description: "canary event message"},
+                eventType: %Schema{type: :string, description: "canary event type"},
+                timestamp: %Schema{type: :string, description: "unix timestamp ms"}
+              },
+              required: [:eventMessage, :eventType, :timestamp]
+            }
+          },
+          required: [:metadata]
+        }
+      ],
+      example: %{
+        "name" => "podinfo",
+        "namespace" => "test",
+        "phase" => "Progressing",
+        "metadata" => %{
+          "eventMessage" => "string (canary event message)",
+          "eventType" => "string (canary event type)",
+          "timestamp" => "string (unix timestamp ms)"
+        }
+      }
+    })
+  end
+
   defmodule SchemaError do
     @moduledoc false
 

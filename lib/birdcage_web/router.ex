@@ -37,6 +37,7 @@ defmodule BirdcageWeb.Router do
 
     post("/confirm/rollout", BirdcageWeb.WebhookController, :confirm_rollout)
     post("/confirm/promotion", BirdcageWeb.WebhookController, :confirm_promotion)
+    post("/event", BirdcageWeb.WebhookController, :event)
 
     get "/openapi", OpenApiSpex.Plug.RenderSpec, []
   end
