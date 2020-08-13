@@ -1,3 +1,15 @@
+# [1.8.0](https://github.com/cognizant-softvision/birdcage/compare/v1.7.3...v1.8.0) (2020-08-13)
+
+
+### Bug Fixes
+
+* failing tests ([3dfafdb](https://github.com/cognizant-softvision/birdcage/commit/3dfafdbf802de6ddf6220e4f7dcf5746a9575396))
+
+
+### Features
+
+* handle and log events to see what might be useful to display (#9) ([ce343b7](https://github.com/cognizant-softvision/birdcage/commit/ce343b74f42380365865c2207ac8f6ba4e4d05ef)), closes [#9](https://github.com/cognizant-softvision/birdcage/issues/9)
+
 ## [1.7.3](https://github.com/cognizant-softvision/birdcage/compare/v1.7.2...v1.7.3) (2020-08-12)
 
 
