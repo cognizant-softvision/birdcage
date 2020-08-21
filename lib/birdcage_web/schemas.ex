@@ -69,9 +69,9 @@ defmodule BirdcageWeb.Schemas do
         "namespace" => "test",
         "phase" => "Progressing",
         "metadata" => %{
-          "eventMessage" => "string (canary event message)",
-          "eventType" => "string (canary event type)",
-          "timestamp" => "string (unix timestamp ms)"
+          "eventMessage" => "New revision detected! Scaling up podinfo.test",
+          "eventType" => "Normal",
+          "timestamp" => "1597351286250"
         }
       }
     })

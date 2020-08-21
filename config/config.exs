@@ -24,9 +24,13 @@ config :logger, :console,
 config :phoenix, :json_library, Jason
 
 # Cache
-config :birdcage, Birdcage.Cache, backend: :ets
-# => 1 hr
-# gc_interval: 3_600_000,
+config :birdcage, Birdcage.Cache,
+  # => 1 hr
+  gc_interval: 3_600_000,
+  # => 1 day
+  # gc_interval: 86_400_000,
+  # backend: :shards
+  backend: :ets
 
 config :birdcage, NebulexEctoRepoAdapter, cache: Birdcage.Cache
 

@@ -1,0 +1,11 @@
+<li id="<%= @id %>" class="flex items-center w-full p-2 mb-2 text-left bg-white rounded shadow">
+  <span class="mr-4 font-bold"><%= deployment_name(@event) %></span>
+  <span class="inline-block px-3 py-1 mr-2 text-xs font-semibold text-gray-700 <%= phase_class_bg(@event.phase) %> rounded-full"><%= @event.phase %></span>
+  <span class="flex-grow"><%= message(@event) %></span>
+  <span
+    x-data="{at: '<%= @event.inserted_at %>', atAgo: ''}"
+    x-init="window.setInterval(()=>{atAgo = dayjs().to(dayjs(at))}, 1000)"
+    x-show="at && atAgo"
+    x-text="atAgo"
+    class="inline-block px-3 py-1 mr-2 text-xs font-semibold text-gray-700 bg-gray-200 rounded-full"></span>
+</li>

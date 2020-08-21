@@ -87,44 +87,54 @@ defmodule NebulexEctoRepoAdapter do
   def autogenerate(:embed_id), do: Ecto.UUID.autogenerate()
 
   @impl true
-  def insert(_, %{schema: schema} = _meta, fields, _on_conflict, _returning, _opts) do
+  def insert(_, %{schema: schema}, fields, _on_conflict, _returning, opts) do
+    schema_name = TableStructure.schema_name(schema)
     id = Keyword.fetch!(fields, :id)
+    key = {schema_name, id}
 
     field_names = TableStructure.field_names(schema)
     changes = TableStructure.fields_to_tuple(field_names, fields)
 
-    :ok = @cache.put(id, changes)
+    :ok = @cache.put(key, changes, opts)
     {:ok, []}
   end
 
   # Notice the list of changes is never empty.
   @impl true
-  def update(_, %{schema: schema} = _meta, [_ | _] = changes, filters, [], _opts) do
-    [key_name] = schema.__schema__(:primary_key)
-    [{^key_name, key}] = filters
+  def update(_, %{schema: schema}, [_ | _] = changes, filters, [], opts) do
+    schema_name = TableStructure.schema_name(schema)
+    [primary_key] = schema.__schema__(:primary_key)
+    [{^primary_key, id}] = filters
+    key = {schema_name, id}
 
     updates = build_updates(schema, changes)
 
     {_get, _updated} =
-      @cache.get_and_update(key, fn current_value ->
-        new_value =
-          updates
-          |> Enum.reduce(current_value, fn update, acc ->
-            put_elem(acc, elem(update, 0), elem(update, 1))
-          end)
+      @cache.get_and_update(
+        key,
+        fn current_value ->
+          new_value =
+            updates
+            |> Enum.reduce(current_value, fn update, acc ->
+              put_elem(acc, elem(update, 0), elem(update, 1))
+            end)
 
-        {current_value, new_value}
-      end)
+          {current_value, new_value}
+        end,
+        opts
+      )
 
     {:ok, []}
   end
 
   @impl true
-  def delete(_, %{schema: schema} = _meta, filters, _opts) do
-    [key_name] = schema.__schema__(:primary_key)
-    [{^key_name, key}] = filters
+  def delete(_, %{schema: schema}, filters, opts) do
+    schema_name = TableStructure.schema_name(schema)
+    [primary_key] = schema.__schema__(:primary_key)
+    [{^primary_key, id}] = filters
+    key = {schema_name, id}
 
-    :ok = @cache.delete(key)
+    :ok = @cache.delete(key, opts)
     {:ok, []}
   end
 

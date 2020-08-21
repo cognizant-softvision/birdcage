@@ -2,6 +2,8 @@ defmodule BirdcageWeb.RequireLoginTest do
   @moduledoc false
   use BirdcageWeb.ConnCase
 
+  alias BirdcageWeb.Plugs.RequireLogin
+
   setup %{conn: conn} do
     conn =
       conn
@@ -42,7 +44,7 @@ defmodule BirdcageWeb.RequireLoginTest do
   end
 
   defp require_login(conn) do
-    conn |> BirdcageWeb.Plugs.RequireLogin.call(%{})
+    conn |> RequireLogin.call(%{})
   end
 
   defp authenticate(conn) do

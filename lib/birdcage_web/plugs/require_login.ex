@@ -18,7 +18,7 @@ defmodule BirdcageWeb.Plugs.RequireLogin do
     end
   end
 
-  defp disabled?() do
+  defp disabled? do
     not Birdcage.Application.authentication_enabled?()
   end
 

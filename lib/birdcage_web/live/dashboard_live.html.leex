@@ -14,5 +14,19 @@
         <% end %>
       </ul>
     </div>
+
+    <%= if length(@events) > 0 do %>
+    <div class="lg:text-center">
+      <h3 class="text-3xl font-semibold leading-6 tracking-wide text-indigo-600 uppercase">Events</h3>
+    </div>
+
+    <div class="mt-10">
+      <ul id="events" phx-update="prepend" class="flex flex-col p-4 overflow-y-auto bg-gray-200 rounded shadow h-128">
+        <%= for event <- @events do %>
+          <%= live_component @socket, EventComponent, id: event.id, event: event %>
+        <% end %>
+      </ul>
+    </div>
+    <% end %>
   </div>
 </div>

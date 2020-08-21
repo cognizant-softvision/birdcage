@@ -12,6 +12,8 @@ defmodule BirdcageWeb.WebhookController do
 
   action_fallback(BirdcageWeb.FallbackController)
 
+  @event_ttl 3_600_000
+
   @doc """
   Confirm rollout webhook.
 
@@ -69,10 +71,10 @@ defmodule BirdcageWeb.WebhookController do
          unprocessable_entity: {"Unprocessable", "application/json", Schemas.SchemaError}
        ]
   def event(conn, _params, event_params) do
-    Logger.info("Event: #{inspect(event_params)}")
-
-    conn
-    |> put_status(:ok)
-    |> render(:"200")
+    with {:ok, _event} <- Dashboard.create_event(event_params, ttl: @event_ttl) do
+      conn
+      |> put_status(:ok)
+      |> render(:"200")
+    end
   end
 end

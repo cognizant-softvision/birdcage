@@ -18,6 +18,28 @@ defmodule BirdcageWeb.WebhookControllerTest do
     "phase" => "BAD"
   }
 
+  @valid_event_attrs %{
+    "metadata" => %{
+      "eventMessage" => "Canary failed! Scaling down rollout-test.flagger",
+      "eventType" => "Warning",
+      "timestamp" => "1597351286259"
+    },
+    "name" => "rollout-test",
+    "namespace" => "flagger",
+    "phase" => "Failed"
+  }
+
+  @invalid_event_attrs %{
+    "metadata" => %{
+      "eventMessage" => nil,
+      "eventType" => 2,
+      "timestamp" => "asdf"
+    },
+    "name" => nil,
+    "namespace" => 1234,
+    "phase" => "BAD"
+  }
+
   setup %{conn: conn} do
     conn =
       conn
@@ -99,6 +121,22 @@ defmodule BirdcageWeb.WebhookControllerTest do
       response =
         conn
         |> post(Routes.webhook_path(conn, :confirm_promotion), @invalid_params)
+        |> json_response(422)
+
+      assert %{"errors" => _} = response
+    end
+  end
+
+  describe "event webhook" do
+    test "renders success when event is processes", %{conn: conn} do
+      conn = post(conn, Routes.webhook_path(conn, :event), @valid_event_attrs)
+      assert "OK" = json_response(conn, 200)
+    end
+
+    test "renders errors when data is invalid", %{conn: conn} do
+      response =
+        conn
+        |> post(Routes.webhook_path(conn, :event), @invalid_event_attrs)
         |> json_response(422)
 
       assert %{"errors" => _} = response

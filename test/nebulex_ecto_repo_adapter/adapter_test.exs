@@ -1,16 +1,27 @@
 defmodule NebulexEctoRepoAdapterTest do
   use ExUnit.Case
 
-  alias Birdcage.Deployment
+  alias Birdcage.{Deployment, Event}
   alias Birdcage.Repo
 
   import Ecto.Query
 
-  @valid_params %{
+  @valid_dashboard_params %{
     "name" => "podinfo",
     "namespace" => "test",
     "phase" => "Progressing",
     "confirm_rollout_at" => ~U[2018-11-15 10:00:00Z]
+  }
+
+  @valid_event_attrs %{
+    "name" => "podinfo",
+    "namespace" => "test",
+    "phase" => "Failed",
+    "metadata" => %{
+      "eventMessage" => "Canary failed! Scaling down rollout-test.flagger",
+      "eventType" => "Warning",
+      "timestamp" => "1597351286250"
+    }
   }
 
   setup do
@@ -19,23 +30,33 @@ defmodule NebulexEctoRepoAdapterTest do
     |> Enum.each(&Birdcage.Cache.delete(&1))
 
     # load test data
-    for x <- 1..10 do
-      @valid_params
+    for x <- 1..9 do
+      @valid_dashboard_params
       |> Map.update("name", x, &"#{&1}##{x}")
       |> Deployment.changeset()
+      |> Repo.insert()
+
+      @valid_event_attrs
+      |> update_in(
+        ["metadata", "timestamp"],
+        &String.replace(&1, "0", to_string(x), global: false)
+      )
+      |> Event.changeset()
       |> Repo.insert()
     end
   end
 
   test "list" do
-    results = Repo.all(Deployment)
+    deployment_results = Repo.all(Deployment)
+    assert length(deployment_results) == 9
 
-    assert length(results) == 10
+    event_results = Repo.all(Event)
+    assert length(event_results) == 9
   end
 
   test "insert" do
     assert {:ok, result} =
-             Deployment.changeset(@valid_params)
+             Deployment.changeset(@valid_dashboard_params)
              |> Repo.insert()
 
     assert result.id == "podinfo.test"
@@ -43,21 +64,24 @@ defmodule NebulexEctoRepoAdapterTest do
 
   test "insert / delete" do
     {:ok, deployment} =
-      Deployment.changeset(@valid_params)
+      Deployment.changeset(@valid_dashboard_params)
       |> Repo.insert()
 
-    assert length(Repo.all(Deployment)) == 11
+    assert length(Repo.all(Deployment)) == 10
 
     Repo.delete(deployment)
-    assert length(Repo.all(Deployment)) == 10
+    assert length(Repo.all(Deployment)) == 9
   end
 
   test "get by id" do
-    Repo.get!(Deployment, "podinfo#2.test")
+    assert %Deployment{} = Repo.get!(Deployment, "podinfo#2.test")
+
+    [%Event{} = event] = Repo.all(Event) |> Enum.take(1)
+    assert %Event{} = Repo.get!(Event, event.id)
   end
 
   test "where" do
-    Deployment.changeset(%{@valid_params | "name" => "larry"})
+    Deployment.changeset(%{@valid_dashboard_params | "name" => "larry"})
     |> Repo.insert()
 
     result =
@@ -70,7 +94,7 @@ defmodule NebulexEctoRepoAdapterTest do
   end
 
   test "select where" do
-    Deployment.changeset(%{@valid_params | "name" => "larry"})
+    Deployment.changeset(%{@valid_dashboard_params | "name" => "larry"})
     |> Repo.insert()
 
     result =

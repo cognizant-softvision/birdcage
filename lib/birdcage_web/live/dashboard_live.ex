@@ -7,34 +7,46 @@ defmodule BirdcageWeb.DashboardLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    socket = socket |> fetch()
+    socket =
+      socket
+      |> fetch_deployments()
+      |> fetch_events()
 
     if connected?(socket), do: subscribe(socket.assigns)
 
-    {:ok, socket}
+    {:ok, socket, temporary_assigns: [events: []]}
   end
 
-  defp fetch(socket) do
+  defp fetch_deployments(socket) do
     socket
     |> assign(deployments: Dashboard.list_deployments())
+  end
+
+  defp fetch_events(socket) do
+    socket
+    |> assign(events: Dashboard.list_events())
   end
 
   @impl true
   def handle_event("toggle_rollout", %{"id" => id}, socket) do
     Dashboard.toggle_rollout(id)
 
-    {:noreply, fetch(socket)}
+    {:noreply, fetch_deployments(socket)}
   end
 
   def handle_event("toggle_promotion", %{"id" => id}, socket) do
     Dashboard.toggle_promotion(id)
 
-    {:noreply, fetch(socket)}
+    {:noreply, fetch_deployments(socket)}
   end
 
   @impl true
-  def handle_info({Dashboard, [_schema, _action], _result}, socket) do
-    {:noreply, fetch(socket)}
+  def handle_info({Dashboard, [:deployment, _action], _result}, socket) do
+    {:noreply, fetch_deployments(socket)}
+  end
+
+  def handle_info({Dashboard, [:event, :created], result}, socket) do
+    {:noreply, assign(socket, :events, [result])}
   end
 
   defp subscribe(_assigns) do

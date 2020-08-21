@@ -2,7 +2,8 @@ defmodule Birdcage.DashboardTest do
   @moduledoc false
   use ExUnit.Case
 
-  alias Birdcage.{Dashboard, Deployment}
+  alias Birdcage.{Dashboard, Deployment, Event}
+  alias Nebulex.Adapters.Local.Generation, as: NebulexCache
 
   describe "Dashboard" do
     setup do
@@ -30,6 +31,28 @@ defmodule Birdcage.DashboardTest do
       "phase" => "BAD"
     }
 
+    @valid_event_attrs %{
+      "metadata" => %{
+        "eventMessage" => "Canary failed! Scaling down rollout-test.flagger",
+        "eventType" => "Warning",
+        "timestamp" => "1597351286259"
+      },
+      "name" => "rollout-test",
+      "namespace" => "flagger",
+      "phase" => "Failed"
+    }
+
+    @invalid_event_attrs %{
+      "metadata" => %{
+        "eventMessage" => nil,
+        "eventType" => 2,
+        "timestamp" => "asdf"
+      },
+      "name" => nil,
+      "namespace" => 1234,
+      "phase" => "BAD"
+    }
+
     def deployment_fixture(attrs \\ %{}) do
       {:ok, deployment} =
         attrs
@@ -39,7 +62,17 @@ defmodule Birdcage.DashboardTest do
       deployment
     end
 
+    def event_fixture(attrs \\ %{}) do
+      {:ok, event} =
+        attrs
+        |> Enum.into(@valid_event_attrs)
+        |> Dashboard.create_event()
+
+      event
+    end
+
     test "list_deployments/0 returns all deployments" do
+      event_fixture()
       deployment = deployment_fixture()
       assert Dashboard.list_deployments() == [deployment]
     end
@@ -78,7 +111,9 @@ defmodule Birdcage.DashboardTest do
     test "update_deployment/2 with invalid data returns error changeset" do
       deployment = deployment_fixture()
       assert {:error, %Ecto.Changeset{}} = Dashboard.update_deployment(deployment, @invalid_attrs)
-      assert deployment == Dashboard.get_deployment!(deployment.id)
+
+      assert deployment ==
+               Dashboard.get_deployment!(deployment.id)
     end
 
     test "delete_deployment/1 deletes the deployment" do
@@ -111,6 +146,49 @@ defmodule Birdcage.DashboardTest do
       assert fetched.id == "podinfo.test"
 
       assert fetched == updated
+    end
+
+    test "list_events/0 returns all events" do
+      deployment_fixture()
+      event = event_fixture()
+      assert Dashboard.list_events() == [event]
+    end
+
+    test "get_event!/1 returns the event with given id" do
+      event = event_fixture()
+      assert Dashboard.get_event!(event.id) == event
+    end
+
+    test "create_event/1 with valid data creates an event" do
+      assert {:ok, %Event{} = event} = Dashboard.create_event(@valid_event_attrs)
+
+      assert event.name == "rollout-test"
+      assert event.namespace == "flagger"
+      assert event.phase == "Failed"
+      assert %DateTime{} = event.inserted_at
+
+      assert event.metadata == %Event.Metadata{
+               eventMessage: "Canary failed! Scaling down rollout-test.flagger",
+               eventType: "Warning",
+               timestamp: ~U[2020-08-13 20:41:26Z]
+             }
+    end
+
+    test "create_event/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Dashboard.create_event(@invalid_event_attrs)
+    end
+
+    test "create_event/1 with valid data and ttl creates an event and expires after ttl" do
+      assert {:ok, %Event{} = event} = Dashboard.create_event(@valid_event_attrs, ttl: 100)
+
+      # force the cache GC since Cache.all is called by Ecto Adapter and not
+      # Cache.get which is when entries are expired or evicted (on-demand)
+      :timer.sleep(101)
+      NebulexCache.flush(Birdcage.Cache)
+
+      assert_raise Ecto.NoResultsError, fn ->
+        Dashboard.get_event!(event.id)
+      end
     end
   end
 end

@@ -7,6 +7,10 @@ defmodule NebulexEctoRepoAdapter.Local.TableStructure do
   See: https://github.com/evadne/etso/blob/develop/lib/etso/ets/table_structure.ex
   """
 
+  def schema_name(schema) do
+    Enum.at(Module.split(schema), -1)
+  end
+
   def field_names(schema) do
     fields = schema.__schema__(:fields)
     primary_key = schema.__schema__(:primary_key)
