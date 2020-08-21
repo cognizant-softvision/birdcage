@@ -1,3 +1,10 @@
+## [1.9.2](https://github.com/cognizant-softvision/birdcage/compare/v1.9.1...v1.9.2) (2020-08-21)
+
+
+### Bug Fixes
+
+* upgrade serialize-javascript to address CVE-2020-7660 ([8c2a11e](https://github.com/cognizant-softvision/birdcage/commit/8c2a11ed71f680d044a143aa14ef0708d74785e0))
+
 ## [1.9.1](https://github.com/cognizant-softvision/birdcage/compare/v1.9.0...v1.9.1) (2020-08-21)
 
 
