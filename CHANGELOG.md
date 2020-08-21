@@ -1,3 +1,10 @@
+## [1.9.1](https://github.com/cognizant-softvision/birdcage/compare/v1.9.0...v1.9.1) (2020-08-21)
+
+
+### Bug Fixes
+
+* update event styling and layout ([d99af63](https://github.com/cognizant-softvision/birdcage/commit/d99af63f64eea1b57ba88435986440f91e255294))
+
 # [1.9.0](https://github.com/cognizant-softvision/birdcage/compare/v1.8.1...v1.9.0) (2020-08-21)
 
 
