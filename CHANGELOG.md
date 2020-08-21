@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/cognizant-softvision/birdcage/compare/v1.8.1...v1.9.0) (2020-08-21)
+
+
+### Features
+
+* add support for Events (#10) ([b843c0d](https://github.com/cognizant-softvision/birdcage/commit/b843c0d4515a30a37e34019284647daa43705581)), closes [#10](https://github.com/cognizant-softvision/birdcage/issues/10)
+
 ## [1.8.1](https://github.com/cognizant-softvision/birdcage/compare/v1.8.0...v1.8.1) (2020-08-13)
 
 
