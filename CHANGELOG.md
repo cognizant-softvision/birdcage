@@ -1,3 +1,10 @@
+## [1.10.1](https://github.com/cognizant-softvision/birdcage/compare/v1.10.0...v1.10.1) (2020-08-22)
+
+
+### Bug Fixes
+
+* ignore test coverage for session_controller ([0b6837a](https://github.com/cognizant-softvision/birdcage/commit/0b6837a0c067399474ce748df35eb724a7dff3e1))
+
 # [1.10.0](https://github.com/cognizant-softvision/birdcage/compare/v1.9.2...v1.10.0) (2020-08-22)
 
 
