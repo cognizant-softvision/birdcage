@@ -3,7 +3,6 @@ defmodule Birdcage.DashboardTest do
   use ExUnit.Case
 
   alias Birdcage.{Dashboard, Deployment, Event}
-  alias Nebulex.Adapters.Local.Generation, as: NebulexCache
 
   describe "Dashboard" do
     setup do
@@ -184,7 +183,7 @@ defmodule Birdcage.DashboardTest do
       # force the cache GC since Cache.all is called by Ecto Adapter and not
       # Cache.get which is when entries are expired or evicted (on-demand)
       :timer.sleep(101)
-      NebulexCache.flush(Birdcage.Cache)
+      assert Birdcage.Cache.flush() == 1
 
       assert_raise Ecto.NoResultsError, fn ->
         Dashboard.get_event!(event.id)

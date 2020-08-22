@@ -65,7 +65,8 @@ defmodule Birdcage.MixProject do
       {:plug_health, "~> 0.1.0"},
       {:fawkes, github: "forest/fawkes", ref: "4be10ac"},
       {:vapor, "~> 0.9"},
-      {:openid_connect, "~> 0.2.2"}
+      {:openid_connect, "~> 0.2.2"},
+      {:libcluster, "~> 3.2.1"}
     ]
   end
 

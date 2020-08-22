@@ -3,5 +3,5 @@ defmodule Birdcage.Cache do
 
   use Nebulex.Cache,
     otp_app: :birdcage,
-    adapter: Nebulex.Adapters.Local
+    adapter: Nebulex.Adapters.Replicated
 end
