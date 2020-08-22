@@ -1,3 +1,10 @@
+# [1.10.0](https://github.com/cognizant-softvision/birdcage/compare/v1.9.2...v1.10.0) (2020-08-22)
+
+
+### Features
+
+* support optional clustering in k8s and cache replication (#11) ([2320479](https://github.com/cognizant-softvision/birdcage/commit/2320479d6340f16461e219acdd431980d86bfb6e)), closes [#11](https://github.com/cognizant-softvision/birdcage/issues/11)
+
 ## [1.9.2](https://github.com/cognizant-softvision/birdcage/compare/v1.9.1...v1.9.2) (2020-08-21)
 
 
