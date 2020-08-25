@@ -1,3 +1,10 @@
+# [1.11.0](https://github.com/cognizant-softvision/birdcage/compare/v1.10.2...v1.11.0) (2020-08-25)
+
+
+### Features
+
+* use postgres db for deployment state instead of ets (#12) ([4516c05](https://github.com/cognizant-softvision/birdcage/commit/4516c05c0754b7f6a2858de2b8e3da349eafa3d4)), closes [#12](https://github.com/cognizant-softvision/birdcage/issues/12)
+
 ## [1.10.2](https://github.com/cognizant-softvision/birdcage/compare/v1.10.1...v1.10.2) (2020-08-25)
 
 
