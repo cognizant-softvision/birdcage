@@ -7,9 +7,9 @@ defmodule Birdcage.Application do
 
   def start(_type, _args) do
     children = [
-      {Cluster.Supervisor, [cluster_config(), [name: Birdcage.ClusterSupervisor]]},
       # Start the repository
       Birdcage.Repo,
+      Birdcage.EventRepo,
       # Start the Telemetry supervisor
       BirdcageWeb.Telemetry,
       # Start the PubSub system
@@ -38,24 +38,4 @@ defmodule Birdcage.Application do
   end
 
   def authentication_enabled?, do: get_in(config(), [:openid_connect, :enabled])
-
-  defp cluster_config do
-    config = config()
-
-    case get_in(config, [:cluster, :enabled]) do
-      true ->
-        [
-          k8s: [
-            strategy: Cluster.Strategy.Kubernetes.DNS,
-            config: [
-              service: get_in(config, [:cluster, :discovery_service]),
-              application_name: get_in(config, [:cluster, :service_name])
-            ]
-          ]
-        ]
-
-      _ ->
-        []
-    end
-  end
 end

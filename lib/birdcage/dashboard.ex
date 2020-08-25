@@ -7,6 +7,7 @@ defmodule Birdcage.Dashboard do
 
   import Ecto.Query, warn: false
   alias Birdcage.{Deployment, Event, Repo}
+  alias Birdcage.EventRepo
 
   ### Deployments
 
@@ -26,7 +27,7 @@ defmodule Birdcage.Dashboard do
   @doc """
   Gets a single deployment.
 
-  Raises `Ecto.NoResultsError` if the <%= schema.human_singular %> does not exist.
+  Raises `Ecto.NoResultsError` if the Deployment does not exist.
 
   ## Examples
 
@@ -54,6 +55,18 @@ defmodule Birdcage.Dashboard do
 
   """
   def get_deployment(id), do: Repo.get(Deployment, id)
+
+  @doc """
+  Gets a single deployment by name/namespace pair.
+
+  Returns nil if no result was found.
+  """
+  def get_deployment(name, namespace) when is_binary(name) and is_binary(namespace) do
+    from(Deployment, where: [name: ^name, namespace: ^namespace])
+    |> Repo.one()
+  end
+
+  def get_deployment(_name, _namespace), do: nil
 
   @doc """
   Creates a deployment.
@@ -124,14 +137,12 @@ defmodule Birdcage.Dashboard do
   end
 
   @doc """
-  Get current value for id or insert value.
+  Get current value for name/namespace pair or create new deployment.
   """
-  def fetch_deployment(%{"name" => _name, "namespace" => _namespace} = attrs) do
-    changeset = Deployment.changeset(attrs)
-
-    case get_deployment(changeset.changes.id) do
-      nil -> Repo.insert(changeset)
-      result -> {:ok, result}
+  def fetch_deployment(%{"name" => name, "namespace" => namespace} = attrs) do
+    case get_deployment(name, namespace) do
+      nil -> create_deployment(attrs)
+      %Deployment{} = result -> {:ok, result}
     end
   end
 
@@ -178,7 +189,7 @@ defmodule Birdcage.Dashboard do
   """
   def list_events(count \\ 10) do
     Event
-    |> Repo.all()
+    |> EventRepo.all()
     |> Enum.sort_by(& &1.inserted_at, {:desc, DateTime})
     |> Enum.take(count)
   end
@@ -186,7 +197,7 @@ defmodule Birdcage.Dashboard do
   @doc """
   Gets a single event.
 
-  Raises `Ecto.NoResultsError` if the <%= schema.human_singular %> does not exist.
+  Raises `Ecto.NoResultsError` if the Deployment does not exist.
 
   ## Examples
 
@@ -197,7 +208,7 @@ defmodule Birdcage.Dashboard do
       ** (Ecto.NoResultsError)
 
   """
-  def get_event!(id), do: Repo.get!(Event, id)
+  def get_event!(id), do: EventRepo.get!(Event, id)
 
   @doc """
   Gets a single event.
@@ -213,7 +224,7 @@ defmodule Birdcage.Dashboard do
       nil
 
   """
-  def get_event(id), do: Repo.get(Event, id)
+  def get_event(id), do: EventRepo.get(Event, id)
 
   @doc """
   Creates a event.
@@ -229,7 +240,7 @@ defmodule Birdcage.Dashboard do
   """
   def create_event(attrs \\ %{}, opts \\ []) do
     Event.changeset(attrs)
-    |> Repo.insert(opts)
+    |> EventRepo.insert(opts)
     |> broadcast([:event, :created])
   end
 
@@ -248,7 +259,7 @@ defmodule Birdcage.Dashboard do
   def update_event(%Event{} = event, attrs, opts \\ []) do
     event
     |> Event.changeset(attrs)
-    |> Repo.update(opts)
+    |> EventRepo.update(opts)
     |> broadcast([:event, :updated])
   end
 
@@ -266,7 +277,7 @@ defmodule Birdcage.Dashboard do
   """
   def delete_event(%Event{} = event) do
     event
-    |> Repo.delete()
+    |> EventRepo.delete()
     |> broadcast([:event, :deleted])
   end
 

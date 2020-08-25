@@ -25,7 +25,7 @@ defmodule EventComponent do
   def phase_class_bg(_event), do: "bg-gray-200"
 
   def type_class_bg(%{metadata: %{eventType: "Normal"}}), do: "bg-white"
-  def type_class_bg(%{metadata: %{eventType: "Warning"}}), do: "bg-red-200"
-  def type_class_bg(%{metadata: %{eventType: "Error"}}), do: "bg-red-400"
+  def type_class_bg(%{metadata: %{eventType: "Warning"}}), do: "bg-purple-100"
+  def type_class_bg(%{metadata: %{eventType: "Error"}}), do: "bg-red-200"
   def type_class_bg(_event), do: "bg-white"
 end

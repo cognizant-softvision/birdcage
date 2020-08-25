@@ -7,6 +7,11 @@
 # General application configuration
 use Mix.Config
 
+# Configure generators
+config :birdcage,
+  ecto_repos: [Birdcage.Repo],
+  generators: [context_app: :birdcage, binary_id: true]
+
 # Configures the endpoint
 config :birdcage, BirdcageWeb.Endpoint,
   url: [host: "localhost"],
@@ -25,12 +30,9 @@ config :phoenix, :json_library, Jason
 
 # Cache
 config :birdcage, Birdcage.Cache,
-  primary: [
-    adapter: Nebulex.Adapters.Local,
-    # => 1 hr
-    gc_interval: 3_600_000,
-    backend: :ets
-  ]
+  # => 1 hr
+  gc_interval: 3_600_000,
+  backend: :ets
 
 config :birdcage, NebulexEctoRepoAdapter, cache: Birdcage.Cache
 

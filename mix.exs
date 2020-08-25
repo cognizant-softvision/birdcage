@@ -51,6 +51,8 @@ defmodule Birdcage.MixProject do
       {:telemetry_poller, "~> 0.4"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
+      {:ecto_sql, "~> 3.4"},
+      {:postgrex, ">= 0.0.0"},
       {:plug_cowboy, "~> 2.0"},
       {:credo, "~> 1.4", only: [:dev, :test], runtime: false},
       {:excoveralls, "~> 0.13", only: :test},
@@ -58,15 +60,10 @@ defmodule Birdcage.MixProject do
       {:ecto, "~> 3.4"},
       # {:nebulex, "~> 2.0"},
       {:nebulex, github: "cabol/nebulex"},
-      # => For using :shards as backend
-      # {:shards, "~> 0.6"},
-      # => For using Caching Annotations
-      {:decorator, "~> 1.3"},
       {:plug_health, "~> 0.1.0"},
       {:fawkes, github: "forest/fawkes", ref: "4be10ac"},
-      {:vapor, "~> 0.9"},
-      {:openid_connect, "~> 0.2.2"},
-      {:libcluster, "~> 3.2.1"}
+      {:vapor, "~> 0.10"},
+      {:openid_connect, "~> 0.2.2"}
     ]
   end
 
@@ -78,7 +75,10 @@ defmodule Birdcage.MixProject do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
-      setup: ["deps.get", "cmd npm install --prefix assets"]
+      setup: ["deps.get", "ecto.setup", "cmd npm install --prefix assets"],
+      "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
+      "ecto.reset": ["ecto.drop", "ecto.setup"],
+      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"]
     ]
   end
 

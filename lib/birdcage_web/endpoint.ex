@@ -49,4 +49,13 @@ defmodule BirdcageWeb.Endpoint do
   plug Plug.Head
   plug Plug.Session, @session_options
   plug BirdcageWeb.Router
+
+  def init(_type, config) do
+    app_config = Vapor.load!(BirdcageWeb.Config)
+
+    {:ok,
+     config
+     |> put_in([:http, :port], app_config.web.port)
+     |> Keyword.put(:secret_key_base, app_config.web.secret_key_base)}
+  end
 end

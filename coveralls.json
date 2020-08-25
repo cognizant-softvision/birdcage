@@ -8,6 +8,8 @@
     "lib/birdcage_web/router.ex",
     "lib/birdcage_web/views/changeset_view.ex",
     "lib/birdcage_web/views/error_helpers.ex",
-    "lib/birdcage/application.ex"
+    "lib/birdcage/application.ex",
+    "lib/birdcage/oidc_supervisor.ex",
+    "lib/birdcage/release.ex"
   ]
 }

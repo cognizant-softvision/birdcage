@@ -10,6 +10,12 @@ defmodule Birdcage.Config do
            {:url, "APP_URL", required: false}
          ])
 
+  config :db,
+         env([
+           {:url, "DATABASE_URL"},
+           {:pool_size, "POOL_SIZE", default: 10, map: &String.to_integer/1}
+         ])
+
   config :openid_connect,
          env([
            {:enabled, "OIDC_ENABLED", default: false, map: &String.match?(&1, ~r/true/)},
@@ -20,12 +26,5 @@ defmodule Birdcage.Config do
            {:redirect_uri, "OIDC_REDIRECT_URI", required: false},
            {:response_type, "OIDC_RESPONSE_TYPE", default: "code"},
            {:scope, "OIDC_SCOPE", default: "openid"}
-         ])
-
-  config :cluster,
-         env([
-           {:enabled, "CLUSTER_ENABLED", default: false, map: &String.match?(&1, ~r/true/)},
-           {:discovery_service, "CLUSTER_DISCOVERY_SERVICE", default: "birdcage-headless"},
-           {:service_name, "CLUSTER_SERVICE_NAME", default: "birdcage"}
          ])
 end

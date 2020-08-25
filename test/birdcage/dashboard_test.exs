@@ -1,16 +1,16 @@
 defmodule Birdcage.DashboardTest do
   @moduledoc false
-  use ExUnit.Case
+  use Birdcage.DataCase
 
   alias Birdcage.{Dashboard, Deployment, Event}
 
-  describe "Dashboard" do
-    setup do
-      # clear the cache before each test
-      Birdcage.Cache.stream()
-      |> Enum.each(&Birdcage.Cache.delete(&1))
-    end
+  setup do
+    # clear the cache before each test
+    Birdcage.Cache.stream()
+    |> Enum.each(&Birdcage.Cache.delete(&1))
+  end
 
+  describe "Dashboard" do
     @valid_attrs %{
       "name" => "podinfo",
       "namespace" => "test",
@@ -84,7 +84,6 @@ defmodule Birdcage.DashboardTest do
     test "create_deployment/1 with valid data creates a deployment" do
       assert {:ok, %Deployment{} = deployment} = Dashboard.create_deployment(@valid_attrs)
 
-      assert deployment.id == "podinfo.test"
       assert deployment.name == "podinfo"
       assert deployment.namespace == "test"
       assert deployment.phase == "Progressing"
@@ -126,23 +125,27 @@ defmodule Birdcage.DashboardTest do
       assert %Ecto.Changeset{} = Dashboard.change_deployment(deployment)
     end
 
-    test "fetch_deployment/1 with valid data returns the deployment with the derived id" do
+    test "fetch_deployment/1 with valid data returns the deployment with the unique name/namspace pair" do
       assert {:ok, %Deployment{} = deployment} = Dashboard.fetch_deployment(@valid_attrs)
-      assert deployment.id == "podinfo.test"
+      assert deployment.name == "podinfo"
+      assert deployment.namespace == "test"
     end
 
     test "fetch_deployment/1 with invalid data returns error changeset" do
       assert {:error, %Ecto.Changeset{}} = Dashboard.fetch_deployment(@invalid_attrs)
     end
 
-    test "fetch_deployment/1 with valid and existing data returns the deployment with the derived id" do
+    test "fetch_deployment/1 with valid and existing data returns the deployment with the unique name/namspace pair" do
       assert {:ok, %Deployment{} = created} = Dashboard.create_deployment(@valid_attrs)
-      assert created.id == "podinfo.test"
+      assert created.allow_rollout == false
 
       assert {:ok, %Deployment{} = updated} = Dashboard.toggle_rollout(created.id)
+      assert updated.allow_rollout == true
 
       assert {:ok, %Deployment{} = fetched} = Dashboard.fetch_deployment(@valid_attrs)
-      assert fetched.id == "podinfo.test"
+      assert fetched.name == created.name
+      assert fetched.namespace == created.namespace
+      assert fetched.allow_rollout == true
 
       assert fetched == updated
     end
