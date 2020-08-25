@@ -1,3 +1,10 @@
+## [1.10.2](https://github.com/cognizant-softvision/birdcage/compare/v1.10.1...v1.10.2) (2020-08-25)
+
+
+### Bug Fixes
+
+* handle errors with the OIDC worker failing to start ([910d1ae](https://github.com/cognizant-softvision/birdcage/commit/910d1ae3b38c87686e40a186488b6f5635697199))
+
 ## [1.10.1](https://github.com/cognizant-softvision/birdcage/compare/v1.10.0...v1.10.1) (2020-08-22)
 
 
